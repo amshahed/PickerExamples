@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
                         time = monthFormat.format(calendar.getTime());
                         timeText.setText(time);
                     }
-                }, year, month).build().show();
+                }, year, month)
+                        .setYearRange(1993, calendar.get(Calendar.YEAR))
+                        .build()
+                        .show();
             }
         });
 
@@ -116,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, year, month)
                         .showYearOnly()
-                        .setMinYear(1993)
-                        .setMaxYear(calendar.get(Calendar.YEAR))
+                        .setYearRange(1993, 2030)
                         .build()
                         .show();
             }
