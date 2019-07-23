@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         timeText = findViewById(R.id.pickerText);
         timeText.setText(time);
 
-        findViewById(R.id.timePicker).setOnClickListener(new View.OnClickListener() {
+        Button timePicker = findViewById(R.id.timePicker);
+        timePicker.setOnClickListener(new View.OnClickListener() {
             int hour = calendar.get(Calendar.HOUR);
             int minute = calendar.get(Calendar.MINUTE);
 
@@ -56,14 +58,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.datePicker).setOnClickListener(new View.OnClickListener() {
+        Button datePicker = findViewById(R.id.datePicker);
+        datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
                         calendar.set(Calendar.YEAR, selectedYear);
@@ -72,11 +75,14 @@ public class MainActivity extends AppCompatActivity {
                         time = dateFormat.format(calendar.getTime());
                         timeText.setText(time);
                     }
-                }, year, month, day).show();
+                }, year, month, day);
+                dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                dialog.show();
             }
         });
 
-        findViewById(R.id.monthPicker).setOnClickListener(new View.OnClickListener() {
+        Button monthPicker = findViewById(R.id.monthPicker);
+        monthPicker.setOnClickListener(new View.OnClickListener() {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
 
@@ -94,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.yearPicker).setOnClickListener(new View.OnClickListener() {
+        Button yearPicker = findViewById(R.id.yearPicker);
+        yearPicker.setOnClickListener(new View.OnClickListener() {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
 
@@ -107,11 +114,17 @@ public class MainActivity extends AppCompatActivity {
                         time = String.valueOf(calendar.get(Calendar.YEAR));
                         timeText.setText(time);
                     }
-                }, year, month).showYearOnly().build().show();
+                }, year, month)
+                        .showYearOnly()
+                        .setMinYear(1993)
+                        .setMaxYear(calendar.get(Calendar.YEAR))
+                        .build()
+                        .show();
             }
         });
 
-        findViewById(R.id.rangePicker).setOnClickListener(new View.OnClickListener() {
+        Button rangePicker = findViewById(R.id.rangePicker);
+        rangePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LinearLayout pickerLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_date_range_picker, null, false);
@@ -129,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage(getString(R.string.range_message))
+                        .setMessage("শুরুর দিন এবং শেষ দিনে ক্লিক করে দিনের পরিসীমা সিলেক্ট করুন")
                         .setView(pickerLayout)
                         .setCancelable(true)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -143,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                             }
-                        }).show();
+                        })
+                        .show();
             }
         });
     }

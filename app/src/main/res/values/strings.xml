@@ -6,6 +6,4 @@
     <string name="select_month">মাস সিলেক্ট করুন</string>
     <string name="select_year">বছর সিলেক্ট করুন</string>
     <string name="select_range">পরিসীমা সিলেক্ট করুন</string>
-    <string name="range_message">শুরুর দিন এবং শেষ দিনে ক্লিক করে দিনের পরিসীমা সিলেক্ট করুন</string>
-    <string name="ok">ঠিক আছে</string>
 </resources>
