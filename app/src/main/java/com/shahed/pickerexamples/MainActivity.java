@@ -23,7 +23,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private String time;
     private TextView timeText;
-    private Calendar calendar;
     private SimpleDateFormat timeFormat, dateFormat, monthFormat;
 
     @Override
@@ -31,16 +30,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         dateFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
         monthFormat = new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
-        time = dateFormat.format(calendar.getTime());
+        time = dateFormat.format(Calendar.getInstance().getTime());
         timeText = findViewById(R.id.pickerText);
         timeText.setText(time);
 
         Button timePicker = findViewById(R.id.timePicker);
         timePicker.setOnClickListener(new View.OnClickListener() {
+            Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR);
             int minute = calendar.get(Calendar.MINUTE);
 
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button monthPicker = findViewById(R.id.monthPicker);
         monthPicker.setOnClickListener(new View.OnClickListener() {
+            Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
 
@@ -97,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                         timeText.setText(time);
                     }
                 }, year, month)
-                        .setYearRange(1993, calendar.get(Calendar.YEAR))
                         .build()
                         .show();
             }
@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button yearPicker = findViewById(R.id.yearPicker);
         yearPicker.setOnClickListener(new View.OnClickListener() {
+            Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
 
@@ -119,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, year, month)
                         .showYearOnly()
-                        .setYearRange(1993, 2030)
                         .build()
                         .show();
             }
